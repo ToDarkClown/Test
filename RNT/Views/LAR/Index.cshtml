@@ -1,0 +1,123 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <link href="~/Content/LAR.css" rel="stylesheet" />
+
+    <div class="container-fluid login_all">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 hidden-md hidden-sm hidden-xs login_md8">
+                <div id="myCarousel" class="carousel slide">
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item active"><img src="~/img/12.jpg" alt="1" /></div>
+                        <div class="item"><img src="~/img/12.jpg" alt="2" /></div>
+                        <div class="item"><img src="~/img/12.jpg" alt="3" /></div>
+                    </div>
+                    <a href="#myCarousel" data-slide="prev" class="carousel-control left"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                    <a href="#myCarousel" data-slide="next" class="carousel-control right"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4  login_md4">
+                <div class="login_leftborder" style="background-color:white">
+                    <div class="container login_border">
+                        <div id="login_register">
+                            <div class="form-group">
+                                <h3 class="login_title">用户注册 <small class="login_fail">注册失败</small></h3>
+                                <input class="form-control login_input" type="text" placeholder="用户名" id="login_register_name" />
+                                <input class="form-control login_input" type="password" placeholder="密码"
+                                       id="login_register_password" />
+                                <input class="form-control login_input" type="text" placeholder="电子邮件"
+                                       id="login_register_email" />
+                                <button class="form-control  btn btn-primary" id="create">创建账户</button>
+                                <p class="login_message">已经有了一个账户? <a href="javascript:void(0)">立刻登录</a></p>
+                            </div>
+                        </div>
+                        <div id="login_login">
+                            <div class="form-group">
+                                <h3 class="login_title">用户登录 <small class="login_fail">账号或密码错误</small></h3>
+                                <input class="form-control login_input" type="text" placeholder="用户名" id="login_user_name" />
+                                <input class="form-control login_input2" type="password" placeholder="密码" id="login_password" />
+                                <p class="login_message2"><a href="javascript:void(0)">忘记密码？</a></p>
+                                <button class="form-control  btn btn-primary" id="login_btn">登　录</button>
+                                <p class="login_message">还没有账户? <a href="javascript:void(0)">立刻创建</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+$(function () {
+//    初始隐藏注册
+    $("#login_register").hide();
+//    点击按钮跳转页面
+    $('.login_message a').click(function () {
+        turndiv();
+    });
+//    转换登录注册方法
+    function turndiv(){
+        $('#login_login').animate({
+            height: 'toggle',
+            opacity: 'toggle'
+        }, 'slow');
+        $('#login_register').animate({
+            height: 'toggle',
+            opacity: 'toggle'
+        }, 'slow');
+    }
+//  判定注册是否通过验证
+    $("#create").click(function () {
+        var name=$("#login_register_name").val();
+        var psw=$("#login_register_password").val();
+        var email=$("#login_register_email").val();
+        if(name!=""&&psw!=""&&email!=""){
+            turndiv();
+//            清除失败信息
+            $(".login_fail").eq(1).css("display","none");
+//            清除注册信息，同时建用户名添加到登录账号上
+            $("#login_user_name").val(name);
+            $("#login_register_name").val("");
+           $("#login_register_password").val("");
+           $("#login_register_email").val("");
+        }
+        else{
+            $(".login_fail").eq(0).css("display","inline-block");
+            $(".login_border").removeClass('shake_effect');
+            setTimeout(function()
+            {
+                $(".login_border").addClass('shake_effect')
+            },1);
+        }
+    })
+
+    //  判定登录是否通过验证
+    $("#login_btn").click(function () {
+        var name=$("#login_user_name").val();
+        var psw=$("#login_password").val();
+        if(name!=""&&psw!=""){
+
+//            清除失败信息
+            $(".login_fail").eq(1).css("display","none");
+
+
+        }
+        else{
+//      失败删除密码信息
+            $("#login_password").val("");
+//            提示失败信息
+            $(".login_fail").eq(1).css("display","inline-block");
+            $(".login_border").removeClass('shake_effect');
+            setTimeout(function()
+            {
+                $(".login_border").addClass('shake_effect')
+            },1);
+        }
+    })
+
+})
+    </script>
